@@ -18,9 +18,7 @@ def generateOneClusterData(numberOfFeatures, numberOfRecordsPerClass,
                                             featureDistributionData.featureCovariances,
                                             size=(numberOfRecordsPerClass))
     else:      
-        raise Exception("Distribution: " + distribution + "not implemented!")  
-        
-    np.random.shuffle(data)
-        
+        raise Exception("Distribution: " + distribution + " is not implemented!")  
+                
     return data
     
