@@ -9,10 +9,9 @@ def generateOneClusterData(numberOfFeatures, numberOfRecordsPerClass,
                                         randomNumberSeed=randomNumberSeed)[0]
 
     if distribution.lower() == "uniform":
-        data = np.random.uniform(featureDistributionData.featureMeans,
-                                featureDistributionData.featureMeans + 
-                                featureDistributionData.featureCovariances,
-                                size=(numberOfRecordsPerClass))
+        lowerRange = featureDistributionData.featureMeans
+        upperRange = 3*featureDistributionData.featureMeans
+        data = np.random.uniform(lowerRange, upperRange, size=(numberOfRecordsPerClass, numberOfFeatures))
     elif distribution.lower() == "normal":
         data = np.random.multivariate_normal(featureDistributionData.featureMeans,
                                             featureDistributionData.featureCovariances,

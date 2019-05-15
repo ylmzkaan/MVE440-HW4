@@ -11,7 +11,6 @@ data = generateOneClusterData(DEFAULT_NUMBER_OF_FEATURES,
                             DEFAULT_FEATURE_MEAN_RANGE, 
                             DEFAULT_RANDOM_NUMBER_SEED)
 
-
 OPACITY = 0.7
 plt.figure()
 plt.title("Data Set")
