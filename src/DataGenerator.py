@@ -12,7 +12,7 @@ def generateOneClusterData(numberOfFeatures, numberOfRecordsPerClass,
         lowerRange = featureDistributionData.featureMeans
         upperRange = 3*featureDistributionData.featureMeans
         data = np.random.uniform(lowerRange, upperRange, size=(numberOfRecordsPerClass, numberOfFeatures))
-    elif distribution.lower() == "normal":
+    elif distribution.lower() == "normal" or distribution.lower() == "gaussian":
         data = np.random.multivariate_normal(featureDistributionData.featureMeans,
                                             featureDistributionData.featureCovariances,
                                             size=(numberOfRecordsPerClass))
