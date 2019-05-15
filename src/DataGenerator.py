@@ -29,16 +29,16 @@ def generateData(numberOfClasses, numberOfFeatures, numberOfRecordsPerClass,
         data[rowRangeForCurrentClass,:] = generatedFeatures
     
     labels = list(range(numberOfClasses))
-    labelsArray = np.repeat(labels, numberOfRecordsPerClass)
+    labels = np.repeat(labels, numberOfRecordsPerClass)
     
     #Shuffle with labels
-    concatenatedData = np.concatenate((data,labelsArray[:,np.newaxis]), axis=1)
+    concatenatedData = np.concatenate((data, labels[:,np.newaxis]), axis=1)
     np.random.shuffle(concatenatedData)
     
     data = concatenatedData[:,:-1]
-    labelsArray = concatenatedData[:,-1]
+    labels = concatenatedData[:,-1]
     
-    return (data, labelsArray)
+    return (data, labels)
 
 if __name__ == "__main__":
     
