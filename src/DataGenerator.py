@@ -21,4 +21,3 @@ def generateOneClusterData(numberOfFeatures, numberOfRecordsPerClass,
         raise Exception("Distribution: " + distribution + " is not implemented!")  
                 
     return data
-    
