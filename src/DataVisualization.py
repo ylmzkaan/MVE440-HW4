@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
-from DataGenerator import generateData
+from DataGenerator import generateOneClusterData
 from Settings import (DEFAULT_NUMBER_OF_FEATURES,
                         DEFAULT_NUMBER_OF_RECORDS_PER_CLASS,
                         DEFAULT_FEATURE_MEAN_RANGE,

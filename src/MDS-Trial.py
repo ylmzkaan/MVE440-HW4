@@ -10,7 +10,8 @@ from Settings import (DEFAULT_NUMBER_OF_FEATURES,
 data = generateOneClusterData(DEFAULT_NUMBER_OF_FEATURES,
                             DEFAULT_NUMBER_OF_RECORDS_PER_CLASS,
                             DEFAULT_FEATURE_MEAN_RANGE, 
-                            DEFAULT_RANDOM_NUMBER_SEED)
+                            DEFAULT_RANDOM_NUMBER_SEED,
+                            distribution="uniform")
 
 mds = MDS(n_components=2, n_jobs=-1)
 mdsData = mds.fit_transform(data)
