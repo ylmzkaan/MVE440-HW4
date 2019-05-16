@@ -15,8 +15,10 @@ stdClusterCount = np.empty((10,))
 
 for j, mdsNumberOfComponents in enumerate(mdsNumberOfComponentsRange):
 
-    nClusterCounts = 20
+    nClusterCounts = 50
     clusterCounts = np.empty((nClusterCounts,))
+
+    mds = MDS(n_components=mdsNumberOfComponents, n_jobs=-1)
     print("MDS Number of Components: {}".format(mdsNumberOfComponents))
 
     for i in range(nClusterCounts):
@@ -27,7 +29,6 @@ for j, mdsNumberOfComponents in enumerate(mdsNumberOfComponentsRange):
                                     i,
                                     distribution="normal")
 
-        mds = MDS(n_components=2, n_jobs=-1)
         mdsData = mds.fit_transform(data)
 
         optimalK = OptimalK(parallel_backend='joblib', n_jobs=-1)
@@ -41,9 +42,9 @@ color = np.random.rand(1,3)
 OPACITY = 0.7
 
 plt.figure()        
-plt.title("Data Sets With MDS")
+plt.title("MDS - Number Of Components VS Cluster Count")
 plt.xlabel("MDS - Number Of Components")
 plt.ylabel("Cluster Count")
 plt.errorbar(mdsNumberOfComponentsRange, meanClusterCount, yerr=stdClusterCount,
-            capthick=2, capsize=10)    
+            capthick=2, capsize=10)                 
 plt.show()                
