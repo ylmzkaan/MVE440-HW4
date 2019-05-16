@@ -22,7 +22,6 @@ for j, metric in enumerate(metrics):
     nDifferentDataSet = 50
     clusterCounts = np.empty((nDifferentDataSet,))
 
-    mds = MDS(n_components=6, n_jobs=-1, dissimilarity="precomputed")
     dist = DistanceMetric.get_metric(metric)
     print("MDS Metric: {}".format(metric))
 
@@ -33,8 +32,9 @@ for j, metric in enumerate(metrics):
                                     DEFAULT_FEATURE_MEAN_RANGE, 
                                     i,
                                     distribution="normal")
-        precomputedMetricData = dist.pairwise(data)                                    
-
+        precomputedMetricData = dist.pairwise(data)                      
+                      
+        mds = MDS(n_components=6, n_jobs=-1, dissimilarity="precomputed")
         mdsData = mds.fit_transform(precomputedMetricData)
 
         optimalK = OptimalK(parallel_backend='joblib', n_jobs=-1)
