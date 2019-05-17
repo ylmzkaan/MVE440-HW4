@@ -6,14 +6,15 @@ from sklearn.manifold import MDS
 from sklearn.neighbors import DistanceMetric
 
 from DataGenerator import generateOneClusterData
-from Preprocessing import optimalClusterCount
 from Settings import (DEFAULT_FEATURE_MEAN_RANGE, DEFAULT_NUMBER_OF_FEATURES,
                       DEFAULT_NUMBER_OF_RECORDS_PER_CLASS,
                       DEFAULT_RANDOM_NUMBER_SEED)
 
 metrics = ("euclidean", "manhattan", "chebyshev",
             "minkowski")
-nMetrics = len(metrics)            
+nMetrics = len(metrics)        
+meanStress = np.empty((nMetrics,))
+stdStress = np.empty((nMetrics,))    
 meanClusterCount = np.empty((nMetrics,))
 stdClusterCount = np.empty((nMetrics,))
 
@@ -21,6 +22,7 @@ for j, metric in enumerate(metrics):
 
     nDifferentDataSet = 50
     clusterCounts = np.empty((nDifferentDataSet,))
+    stress = np.empty((nDifferentDataSet,))
 
     dist = DistanceMetric.get_metric(metric)
     print("MDS Metric: {}".format(metric))
@@ -34,28 +36,31 @@ for j, metric in enumerate(metrics):
                                     distribution="normal")
         precomputedMetricData = dist.pairwise(data)                      
                       
-        mds = MDS(n_components=6, n_jobs=-1, dissimilarity="precomputed")
+        mds = MDS(n_components=7, n_jobs=-1, dissimilarity="precomputed")
         mdsData = mds.fit_transform(precomputedMetricData)
 
         optimalK = OptimalK(parallel_backend='joblib', n_jobs=-1)
         clusterCount = optimalK(mdsData, n_refs=3, cluster_array=np.arange(1, 10))
         clusterCounts[i] = clusterCount
+        stress[i] = mds.stress_
     
     meanClusterCount[j] = np.mean(clusterCounts)
     stdClusterCount[j] = np.std(clusterCounts)
 
-color = np.random.rand(1,3)
-OPACITY = 0.7
+    meanStress[j] = np.mean(stress)
+    stdStress[j] = np.std(stress)
 
-plt.figure()        
+plt.subplot(1,2,1)        
 plt.title("Metrics VS Cluster Counts")
 plt.xlabel("Metric")
 plt.ylabel("Cluster Counts")
 plt.errorbar(metrics, meanClusterCount, yerr=stdClusterCount,
-            capthick=2, capsize=10, linewidth=3)                 
+            capthick=2, capsize=10, linewidth=3)     
+plt.subplot(1,2,2)        
+plt.title("Metrics VS Cluster Counts")
+plt.xlabel("Metric")
+plt.ylabel("Stress")
+plt.errorbar(metrics, meanStress, yerr=stdStress,
+            capthick=2, capsize=10, linewidth=3)                             
 plt.show()       
 
-dirPath = os.path.dirname(os.path.realpath(__file__))
-saveDir = os.path.dirname(dirPath)
-filename = "MetricsVSClusterCounts.png"
-plt.savefig(os.path.join(saveDir, filename))
