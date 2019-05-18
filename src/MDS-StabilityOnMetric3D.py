@@ -13,8 +13,7 @@ from Settings import (DEFAULT_NUMBER_OF_FEATURES,
 defaultStressPerMDSComponentNumber = [964234,149740520,41874,964234]
 nPerturbations = 20
 nDataSets = 10
-metrics = ("euclidean", "manhattan", "chebyshev",
-            "minkowski")
+metrics = ("euclidean", "manhattan", "chebyshev", "minkowski")
 meanStressDiff = np.empty((4,nDataSets))
 stdStressDiff = np.empty((4,nDataSets))
 
