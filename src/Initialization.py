@@ -32,13 +32,19 @@ def initializeFeatureMeans(numberOfClasses, numberOfFeatures, _range,
         featureMeansOfEachClass[i] = initialMeans*_range[1] - _range[0]
     return featureMeansOfEachClass
 
-def initializeFeatureCov(numberOfClasses, numberOfFeatures, randomNumberSeed=None):
+def initializeFeatureCov(numberOfClasses, numberOfFeatures, randomNumberSeed=None, noCovariance=True):
 
     if randomNumberSeed != None:
         np.random.seed(randomNumberSeed)
 
     # Initialize feature covariance for each class
     featureCovarianceOfEachClass = np.empty((numberOfClasses, numberOfFeatures, numberOfFeatures))
+
+    if noCovariance:
+        for i in range(numberOfClasses):
+            featureCovarianceOfEachClass[i] = np.identity(numberOfFeatures)
+        return featureCovarianceOfEachClass
+
     for i in range(numberOfClasses):
         initialCov = np.random.rand(numberOfFeatures, numberOfFeatures)
 
@@ -51,8 +57,3 @@ def initializeFeatureCov(numberOfClasses, numberOfFeatures, randomNumberSeed=Non
 
         featureCovarianceOfEachClass[i] = symmetricCov
     return featureCovarianceOfEachClass
-
-
-
-
-
